@@ -2325,6 +2325,8 @@ static void clean_up_after_endstop_or_probe_move() {
       #if ENABLED(DEBUG_LEVELING_FEATURE)
         float first_probe_z = current_position[Z_AXIS];
         if (DEBUGGING(LEVELING)) SERIAL_ECHOLNPAIR("1st Probe Z:", first_probe_z);
+      #else
+        float first_probe_z = current_position[Z_AXIS];
       #endif
 
       // move up to make clearance for the probe
@@ -2357,6 +2359,19 @@ static void clean_up_after_endstop_or_probe_move() {
       if (DEBUGGING(LEVELING)) {
         SERIAL_ECHOPAIR("2nd Probe Z:", current_position[Z_AXIS]);
         SERIAL_ECHOLNPAIR(" Discrepancy:", first_probe_z - current_position[Z_AXIS]);
+      }
+    #endif
+
+    #if ENABLED(PROBE_DOUBLE_TOUCH)
+      //SERIAL_ECHOLNPAIR(" Discrepancy:", first_probe_z - current_position[Z_AXIS]);
+      while (abs(first_probe_z - current_position[Z_AXIS]) >= 0.05) {
+        first_probe_z = current_position[Z_AXIS];
+        // move up to make clearance for the probe
+        do_blocking_move_to_z(current_position[Z_AXIS] + Z_CLEARANCE_BETWEEN_PROBES, MMM_TO_MMS(Z_PROBE_SPEED_FAST));
+
+        // move down slowly to find bed
+        if (do_probe_move(-10 + (short_move ? 0 : -(Z_MAX_LENGTH)), Z_PROBE_SPEED_SLOW)) return NAN;
+        //SERIAL_ECHOLNPAIR(" Discrepancy:", first_probe_z - current_position[Z_AXIS]);
       }
     #endif
 
