@@ -2227,8 +2227,6 @@ static void clean_up_after_endstop_or_probe_move() {
 
       #if ENABLED(DEBUG_LEVELING_FEATURE)
         if (DEBUGGING(LEVELING)) SERIAL_ECHOLNPAIR("1st Probe Z:", first_probe_z);
-      #else
-        float first_probe_z = current_position[Z_AXIS];
       #endif
 
       // move up to make clearance for the probe
