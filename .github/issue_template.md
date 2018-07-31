@@ -28,4 +28,4 @@ Before filing an issue be sure to test the 1.1 and/or 2.0 "bugfix" branches to s
 
 * Include a ZIP file containing your `Configuration.h` and `Configuration_adv.h` files.
 * Provide pictures or links to videos that clearly demonstrate the issue.
-* See [How Can I Contribute](#how-can-i-contribute) for additional guidelines.
+* See [How Can I Contribute](https://github.com/MarlinFirmware/Marlin/blob/1.1.x/.github/contributing.md#how-can-i-contribute) for additional guidelines.
